@@ -54,5 +54,15 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+    screen.fill(ShamrockGreen)
+
+    pygame.draw.rect(screen, LimeGreen, (player_x, player_y, CharacterHeight, CharacterWidth))
+
+    design(text=f'Points: {points}', color=Black, font_size=24, x=20, y=20)
+    design(text=f'Timer: {timer}', color=Black, font_size=24, x=575, y=20)
+    
+    pygame.display.update()
+
+ 
 
 
