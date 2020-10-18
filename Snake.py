@@ -53,10 +53,25 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+            pygame.event
+
+    keys = pygame.key.get_pressed()
+
+    if keys[pygame.K_LEFT]:
+        player_x -= speed
+    if keys[pygame.K_RIGHT]:
+        player_x += speed
+    if keys[pygame.K_DOWN]:
+        player_y += speed
+    if keys[pygame.K_UP]:
+        player_y -= speed
+       
+    enemy_y += speed
 
     screen.fill(ShamrockGreen)
 
     pygame.draw.rect(screen, LimeGreen, (player_x, player_y, CharacterHeight, CharacterWidth))
+    
 
     design(text=f'Points: {points}', color=Black, font_size=24, x=20, y=20)
     design(text=f'Timer: {timer}', color=Black, font_size=24, x=575, y=20)
