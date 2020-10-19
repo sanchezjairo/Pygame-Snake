@@ -11,20 +11,24 @@ ScreenHeight = 650
 CharacterWidth = 35
 CharacterHeight = 35
 
+FoodWidth = 20
+FoodHeight = 20
+
 LimeGreen = (50,205,50)
 Black = (0,0,0)
 ShamrockGreen = (0,158,96)
 Red = (255,0,0)
+Darkgrey = (169,169,169)
 
-
-player_x = 65
-player_y = 65
+player_x = 325
+player_y = 325
 
 food_x = 300
 food_y = 30
 
 enemy_x = 300
 enemy_y = 10
+
 
 speed = 6
 points = 0
@@ -68,10 +72,25 @@ while running:
        
     enemy_y += speed
 
+    if enemy_y > ScreenHeight:
+        enemy_y = 0
+        enemy_x = random.random() * (ScreenWidth-CharacterWidth)
+
+   
+    if is_touched(player_x, player_y, enemy_x, enemy_y, CharacterWidth, CharacterHeight,):
+        points = 0
+        player_x = 325
+        player_y = 325
+    if is_touched(player_x,player_y,food_x,food_y, CharacterHeight,CharacterWidth):
+        points += 1
+        food_y = 200
+        food_x = random.random() * (ScreenWidth-CharacterWidth)
+
     screen.fill(ShamrockGreen)
 
     pygame.draw.rect(screen, LimeGreen, (player_x, player_y, CharacterHeight, CharacterWidth))
-    
+    pygame.draw.rect(screen, Red, (enemy_x, enemy_y, CharacterHeight, CharacterWidth))
+    pygame.draw.rect(screen, Darkgrey, (food_x, food_y, CharacterHeight, CharacterWidth))
 
     design(text=f'Points: {points}', color=Black, font_size=24, x=20, y=20)
     design(text=f'Timer: {timer}', color=Black, font_size=24, x=575, y=20)
