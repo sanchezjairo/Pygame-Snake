@@ -29,10 +29,13 @@ food_y = 30
 enemy_x = 300
 enemy_y = 10
 
+enemy2_x = 200
+enemy2_y = 10
 
 speed = 6
 points = 0
 timer = 0
+time = 0
 
 screen = pygame.display.set_mode([ScreenWidth, ScreenHeight])
 
@@ -54,6 +57,12 @@ while running:
 
     pygame.time.delay(20)
 
+    time += 1
+
+    if time >= 60:
+        time= 0 
+        timer += 1
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -71,29 +80,40 @@ while running:
         player_y -= speed
        
     enemy_y += speed
+    enemy2_y += speed
 
     if enemy_y > ScreenHeight:
         enemy_y = 0
         enemy_x = random.random() * (ScreenWidth-CharacterWidth)
 
-   
+    if enemy2_y >ScreenHeight:
+        enemy2_y = 0
+        enemy2_x = random.random() * (ScreenWidth- CharacterWidth)
+
     if is_touched(player_x, player_y, enemy_x, enemy_y, CharacterWidth, CharacterHeight,):
         points = 0
         player_x = 325
         player_y = 325
+        timer = 0
     if is_touched(player_x,player_y,food_x,food_y, CharacterHeight,CharacterWidth):
         points += 1
         food_y = 200
         food_x = random.random() * (ScreenWidth-CharacterWidth)
+    if is_touched(player_x, player_y, enemy2_x, enemy2_y, CharacterWidth, CharacterHeight):
+        points = 0
+        player_x = 325
+        player_y = 325
+        timer = 0
 
     screen.fill(ShamrockGreen)
 
     pygame.draw.rect(screen, LimeGreen, (player_x, player_y, CharacterHeight, CharacterWidth))
     pygame.draw.rect(screen, Red, (enemy_x, enemy_y, CharacterHeight, CharacterWidth))
     pygame.draw.rect(screen, Darkgrey, (food_x, food_y, CharacterHeight, CharacterWidth))
+    pygame.draw.rect(screen, Red, (enemy2_x, enemy2_y, CharacterHeight, CharacterWidth))
 
     design(text=f'Points: {points}', color=Black, font_size=24, x=20, y=20)
-    design(text=f'Timer: {timer}', color=Black, font_size=24, x=575, y=20)
+    design(text=f'Timer: {timer}', color=Black, font_size=24, x=550, y=20)
     
     pygame.display.update()
 
